@@ -15,7 +15,7 @@ class Quadratic {
       //// printing delta
       println("delta is " + delta)
       srt = Math.sqrt(delta)
-      //// if the squre root is imaginary
+      //// if the squre root is imaginary then follow imaginary root procedure
       if (Math.sqrt(delta).isNaN) {
         //// if the sqrt is imaginary root
         delta = -delta
