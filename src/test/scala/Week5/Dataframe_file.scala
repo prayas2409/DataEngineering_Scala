@@ -55,55 +55,59 @@ object Dataframe_file {
     dfnew.printSchema()
 
     // df4
-    println("Fifth DF")
-    val values = spark.sparkContext.parallelize(List(List("1", 1) ,List("2", 2) ,List("3", 3),List("4",4)))
-    val rowRDD = values.map(e => Row(e(0), e(1)))
-    val schem = StructType(
-      Array(StructField("Name",StringType,true),
-        StructField("Age",IntegerType,true)))
-
-    val df2 = spark.createDataFrame(rowRDD,schem)
-    df2.show()
-    println(df2.printSchema())
-
-    // df from file
-        var df3 = spark.read
-      .option("inferSchema", "true")
-      .option("header", "false")
-      .schema(schema)
-      .csv("src/test/scala/Week5/data/a.txt")
-
-        df3.show()
-        df3.printSchema()
-
+//    println("Fifth DF")
+//    val values = spark.sparkContext.parallelize(List(List("1", 1) ,List("2", 2) ,List("3", 3),List("4",4)))
+//    val rowRDD = values.map(e => Row(e(0), e(1)))
+//    val schem = StructType(
+//      Array(StructField("Name",StringType,true),
+//        StructField("Age",IntegerType,true)))
+//
+//    val df2 = spark.createDataFrame(rowRDD,schem)
+//    df2.show()
+//    println(df2.printSchema())
+//
+//    // df from file
+//        var df3 = spark.read
+//      .option("inferSchema", "true")
+//      .option("header", "false")
+//      .schema(schema)
+//      .csv("src/test/scala/Week5/data/a.txt")
+//
+//        df3.show()
+//        df3.printSchema()
+//
+////
+////    var file = spark.sparkContext.textFile("src/test/scala/Week5/data/a.txt")
+////    file.foreach(getLines(_))
 //
 //    var file = spark.sparkContext.textFile("src/test/scala/Week5/data/a.txt")
-//    file.foreach(getLines(_))
+//    println("Printing rows")
+//    var rows = Seq(file.map(Row(_)))
+//    println("Printing the seq rows")
+//    rows.foreach(println(_))
+////    var df_file_sq = spark.createDataFrame(rows)
+//
+//    println("Fifth Dataframe")
+//    var newlist = spark.sparkContext.parallelize(List(List("prayas",23,"ngp"), List("sam",32,"kamp"),List("nik",54,"jbl")))
+//    var rddlist = newlist.map(x => Row(x(0),x(1),x(2)))
+//    var schema4 = StructType(Array(
+//        StructField("Name",StringType,true),
+//        StructField("Age",IntegerType,false),
+//        StructField("City",StringType,true)
+//      ))
+//    var df4 = spark.createDataFrame(rddlist,schema4)
+//    df4.show()
+//    df4.printSchema()
+//
+////       Creation of sql table
+//      df4.createTempView("Temporary_Table1")
+//
+//      println("Table created succesfully")
+//
+//      spark.sql("select * from Temporary_Table1 where Age>30").show()
 
-    var file = spark.sparkContext.textFile("src/test/scala/Week5/data/a.txt")
-    println("Printing rows")
-    var rows = Seq(file.map(Row(_)))
-    println("Printing the seq rows")
-    rows.foreach(println(_))
-//    var df_file_sq = spark.createDataFrame(rows)
-
-    println("Fifth Dataframe")
-    var newlist = spark.sparkContext.parallelize(List(List("prayas",23,"ngp"), List("sam",32,"kamp"),List("nik",54,"jbl")))
-    var rddlist = newlist.map(x => Row(x(0),x(1),x(2)))
-    var schema4 = StructType(Array(
-        StructField("Name",StringType,true),
-        StructField("Age",IntegerType,false),
-        StructField("City",StringType,true)
-      ))
-    var df4 = spark.createDataFrame(rddlist,schema4)
-    df4.show()
-    df4.printSchema()
-
-//       Creation of sql table
-      df4.createTempView("Temporary_Table1")
-
-      println("Table created succesfully")
-
-      spark.sql("select * from Temporary_Table1 where Age>30").show()
+    var list1 = List(List("prayas",23,"ngp"), List("sam",32,"kamp"),List("nik",54,"jbl"))
+    val rowRDD = list1.map(e => Row( (for( a <- 0 until 3)e(a))))
+    rowRDD.foreach(println(_))
   }
 }
