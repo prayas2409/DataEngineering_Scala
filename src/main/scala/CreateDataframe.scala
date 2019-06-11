@@ -34,11 +34,25 @@ class CreateDataframe{
       .option("inferSchema", "true")
       .option("header", "false")
       .schema(schema)
-      .csv("src/test/scala/Week5/data/a.txt")
-    println("Data")
+      .csv(file)
+    println("Data when provided schema")
     df.printSchema()
     df.show()
     df.createTempView("Temporary_Table2")
+    println("Table created succesfully")
+    sparkSession.sql("select * from Temporary_Table2").show()
+  }
+
+  def fromFile(file:String,sparkSession: SparkSession)= {
+    var df = sparkSession.read
+      .option("inferSchema", "true")
+      .option("header", "true")
+      .csv(file)
+
+    println("Data for without schema")
+    df.printSchema()
+    df.show()
+    df.createOrReplaceTempView("Temporary_Table2")
     println("Table created succesfully")
     sparkSession.sql("select * from Temporary_Table2").show()
   }
