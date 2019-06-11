@@ -43,6 +43,7 @@ class CreateDataframe{
     sparkSession.sql("select * from Temporary_Table2").show()
   }
 
+
   def fromFile(file:String,sparkSession: SparkSession)= {
     var df = sparkSession.read
       .option("inferSchema", "true")
