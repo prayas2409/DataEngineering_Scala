@@ -103,7 +103,6 @@ object Dataframe_file {
       df4.createTempView("Temporary_Table1")
 
       println("Table created succesfully")
-
       spark.sql("select * from Temporary_Table1 where Age>30").show()
 
   }
