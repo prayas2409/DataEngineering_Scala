@@ -1,8 +1,10 @@
 
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import junit.framework._
 
-object DataframeTestCases {
+
+object DataframeTestCases extends TestCase{
 
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
@@ -17,8 +19,19 @@ object DataframeTestCases {
     )
 
     test.fromList(list,spark,3,schema)
-    test.fromFile("src/main/scala/data/a.txt",spark,schema)
+    var dfwithoutheader = spark.read
+      .option("inferSchema", "true")
+      .option("header", "false")
+      .schema(schema)
+      .csv("src/main/scala/data/a.txt")
 
+    var dfwithheader = spark.read
+      .option("inferSchema", "true")
+      .option("header", "false")
+      .schema(schema)
+      .csv("src/main/scala/data/withheader.txt")
+    Assert.assertEquals(test.fromFile("src/main/scala/data/a.txt",spark,schema),dfwithoutheader)
+    Assert.assertEquals(test.fromFile("src/main/scala/data/withheader.txt",spark),dfwithheader)
   }
 
 }
